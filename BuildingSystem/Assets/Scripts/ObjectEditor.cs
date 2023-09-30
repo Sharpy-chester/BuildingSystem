@@ -7,12 +7,15 @@ public class ObjectEditor : MonoBehaviour
 {
     [SerializeField] Slider slider;
     Animator sliderAnim;
+    [SerializeField] Animator deleteAnim;
     [SerializeField] float rotSpeed = 45f;
+    ObjectPlacer placer;
     public GameObject EditableObject { get; private set; }
 
     void Awake()
     {
         sliderAnim = slider.GetComponentInParent<Animator>();
+        placer = FindObjectOfType<ObjectPlacer>();
     }
 
     void Update()
@@ -45,6 +48,7 @@ public class ObjectEditor : MonoBehaviour
         {
             //selecting primative
             sliderAnim.SetTrigger("Switch");
+            deleteAnim.SetTrigger("Switch");
             if (EditableObject.GetComponent<MeshRenderer>())
             {
                 EditableObject.GetComponent<MeshRenderer>().material.color *= new Color(1, 1, 1, 2);
@@ -61,6 +65,7 @@ public class ObjectEditor : MonoBehaviour
             if (!EditableObject)
             {
                 sliderAnim.SetTrigger("Switch");
+                deleteAnim.SetTrigger("Switch");
             }
             else
             {
@@ -84,7 +89,14 @@ public class ObjectEditor : MonoBehaviour
             }
             slider.value = obj.transform.localScale.x;
         }
-        
-        
+    }
+
+    public void DeleteEditableObject()
+    {
+        placer.RemoveObject(EditableObject);
+        sliderAnim.SetTrigger("Switch");
+        deleteAnim.SetTrigger("Switch");
+        Destroy(EditableObject);
+        EditableObject = null;
     }
 }

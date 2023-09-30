@@ -13,13 +13,11 @@ public class ObjectSelector : MonoBehaviour
     public void SelectObject(Object obj)
     {
         SelectedObject = obj;
-        print(SelectedObject.name);
         selectionChange?.Invoke();
     }
 
     public void Deselect()
     {
         SelectedObject = null;
-        print("Deselect");
     }
 }
