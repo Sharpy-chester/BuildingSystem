@@ -23,6 +23,7 @@ public class MenuManager : MonoBehaviour
 
     public void Play()
     {
+        Destroy(LevelLoader.Instance.gameObject);
         SceneManager.LoadScene("SampleScene");
     }
 
